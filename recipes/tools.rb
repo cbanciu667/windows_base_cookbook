@@ -8,7 +8,7 @@ include_recipe 'java_se'
 include_recipe 'sysinternals'
 
 # Load creadentials from default data bag
-aws_creds = data_bag_item('aws', 'athena_aws_keys')
+aws_creds = data_bag_item('aws', 'user_aws_keys')
 
 # Create the aws credentials file for user user
 template 'c:\Users\user\.aws\credentials' do
