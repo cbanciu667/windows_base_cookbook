@@ -1,0 +1,41 @@
+#
+# Windows section
+# Set-ExecutionPolicy -ExecutionPolicy Unrestricted -force
+cmd /c "reg add HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Policies\System /v EnableLUA /d 0 /t REG_DWORD /f /reg:64"
+Set-NetFirewallProfile -Enabled false
+Set-NetFirewallProfile -Profile Domain,Public,Private -Enabled False
+winrm quickconfig -q
+winrm set winrm/config/winrs '@{MaxMemoryPerShellMB="1024"}'
+winrm set winrm/config '@{MaxTimeoutms="3600000"}'
+winrm set winrm/config/service '@{AllowUnencrypted="true"}'
+winrm set winrm/config/service/auth '@{Basic="true"}'
+winrm set winrm/config/client/auth '@{Basic="true"}'
+# Disable firewall rules
+Disable-NetFirewallRule -DisplayName "Delivery Optimization (TCP-In)"
+Disable-NetFirewallRule -DisplayName "Delivery Optimization (UDP-In)"
+Disable-NetFirewallRule -DisplayName "AllJoyn Router (TCP-In)"
+Disable-NetFirewallRule -DisplayName "AllJoyn Router (TCP-In)"
+Disable-NetFirewallRule -DisplayName "AllJoyn Router (UDP-In)"
+Disable-NetFirewallRule -DisplayName "AllJoyn Router (UDP-In)"
+Disable-NetFirewallRule -DisplayName "mDNS (UDP-In)"
+Disable-NetFirewallRule -DisplayName "DIAL protocol server (HTTP-In)"
+Disable-NetFirewallRule -DisplayName "Remote Assistance (DCOM-In)"
+Disable-NetFirewallRule -DisplayName "Proximity sharing over TCP (TCP sharing-In)"
+Disable-NetFirewallRule -DisplayName "Remote Assistance (PNRP-In)"
+Disable-NetFirewallRule -DisplayName "Remote Assistance (RA Server TCP-In)"
+Disable-NetFirewallRule -DisplayName "Remote Assistance (SSDP TCP-In)"
+Disable-NetFirewallRule -DisplayName "Remote Assistance (SSDP UDP-In)"
+Disable-NetFirewallRule -DisplayName "Remote Assistance (TCP-In)"
+Disable-NetFirewallRule -DisplayName "Wireless Display (TCP-In)"
+Disable-NetFirewallRule -DisplayName "Wireless Display Infrastructure Back Channel (TCP-In)"
+Disable-NetFirewallRule -DisplayName "SshProxy-Service-Domain"
+Disable-NetFirewallRule -DisplayName "SshProxy-Service-Private"
+Disable-NetFirewallRule -DisplayName "Wi-Fi Direct Network Discovery (In)"
+Disable-NetFirewallRule -DisplayName "Wi-Fi Direct Scan Service Use (In)"
+Disable-NetFirewallRule -DisplayName "Wi-Fi Direct Spooler Use (In)"
+Disable-NetFirewallRule -DisplayName "WFD ASP Coordination Protocol (UDP-In)"
+Disable-NetFirewallRule -DisplayName "WFD Driver-only (TCP-In)"
+Disable-NetFirewallRule -DisplayName "WFD Driver-only (UDP-In)"
+Import-Module c:\chef\cache\UserRights.ps1
+Grant-UserRight -Account "Administrator" -Right SeIncreaseQuotaPrivilege
+Grant-UserRight -Account "Administrator" -Right SeAssignPrimaryTokenPrivilege

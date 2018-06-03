@@ -1,0 +1,28 @@
+{
+  "name": "cos_windows_env",
+  "description": "environment for windows",
+  "cookbook_versions": {
+    "aws": "= 7.2.2",
+    "chef-client": "= 9.0.2",
+    "chef-sugar": "= 3.6.0",
+    "chocolatey": "= 1.2.1",
+    "windows_base_cookbook": "= 2.0.0",
+    "cron": "= 5.0.1",
+    "firewall": "= 2.6.2",
+    "java_se": "= 9.0.1",
+    "logrotate": "= 2.2.0",
+    "ms_dotnet": "= 4.0.1",
+    "ohai": "= 5.2.0",
+    "powershell": "= 6.1.1",
+    "sysinternals": "= 1.1.1",
+    "windows": "= 3.4.3"
+  },
+  "json_class": "Chef::Environment",
+  "chef_type": "environment",
+  "default_attributes": {
+
+  },
+  "override_attributes": {
+
+  }
+}

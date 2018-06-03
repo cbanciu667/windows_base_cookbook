@@ -1,0 +1,52 @@
+driver:
+  name: ec2
+  aws_ssh_key_id: id_rsa
+  security_group_ids: ["sg-da199bb0"]
+  region: eu-central-1
+  availability_zone: c
+  require_chef_omnibus: true
+  iam_profile_name: AmazonEC2RoleforSSM
+  instance_type: t2.medium
+  associate_public_ip: true
+
+
+provisioner:
+  name: chef_zero
+  # You may wish to disable always updating cookbooks in CI or other testing environments.
+  # For example:
+  #   always_update_cookbooks: <%= !ENV['CI'] %>
+  always_update_cookbooks: true
+
+verifier:
+  name: inspec
+
+transport:
+  name: winrm
+  elevated: true
+  retryable_tries: 200
+  retryable_sleep: 8
+  username: Administrator
+  password: PASSWORD_HERE
+  ssh_key: /home/user/.ssh/id_rsa
+
+platforms:
+  - name: windows-2012r2
+    driver:
+        image_id: ami-8c57dce3
+        interface: public
+        block_device_mappings:
+          - device_name: /dev/sda1
+            ebs:
+                volume_type: standard
+                volume_size: 40
+                delete_on_termination: true
+
+suites:
+  - name: default
+    run_list:
+      - recipe[windows_base_cookbook::default]
+    verifier:
+      inspec_tests:
+        - test/smoke/default
+    attributes:
+    data_bags_path: '/home/user/test_databags'
